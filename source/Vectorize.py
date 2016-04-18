@@ -15,3 +15,9 @@ def load_image(path):
 
 def getImages(paths):
 	return [ load_image(p) for p in paths  ]
+
+def getRandomNoise(size):
+	noise = np.zeros((size, 100))
+	for i in range(size):
+		noise[i, : ] = np.random.uniform(-1, 1, 100)
+	return noise
