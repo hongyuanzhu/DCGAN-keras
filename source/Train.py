@@ -100,7 +100,9 @@ def trainOnBatch(batchNo):
 	noise = Vectorize.getRandomNoise(batchSize)
 
 	d_loss = discriminator.train_on_batch(X, y)
-	g_loss = discriminator_on_generator.train_on_batch(noise, [1]*batchSize )
+
+	for i in [1,2]:
+		g_loss = discriminator_on_generator.train_on_batch(noise, [1]*batchSize )
 	
 	Vectorize.saveImageVector(generated_images[0])
 
