@@ -1,4 +1,7 @@
 
+
+
+
 import numpy as np
 import sys, glob
 import cv2
@@ -17,6 +20,7 @@ parser.add_argument("--exp_name", type = str , default = "main")
 parser.add_argument("--data", type = str)
 parser.add_argument("--batch_size", type = int, default = 64 )
 parser.add_argument("--epochs", type = int, default = 5 )
+parser.add_argument('--dont_loadstate',action='store_true')
 args = parser.parse_args()
 
 
@@ -35,6 +39,7 @@ print "Data Loaded"
 TOTAL_EPOCHS = args.epochs
 BATCH_SIZE = args.batch_size
 EXP_NAME  = args.exp_name
+DONT_LOADSTATE = args.dont_loadstate
 
 totalBatches =  math.ceil( (len(paths)+0.0) / BATCH_SIZE)
 
@@ -96,13 +101,16 @@ def trainOnBatch(batchNo):
 
 	d_loss = discriminator.train_on_batch(X, y)
 	g_loss = discriminator_on_generator.train_on_batch(noise, [1]*batchSize )
-	print "lodsss" , d_loss , g_loss
+	
+	Vectorize.saveImageVector(generated_images[0])
+
 	return d_loss , g_loss
 
 
-
-if isSavedState():
-	loadState()
+if not DONT_LOADSTATE:
+	if isSavedState():
+		loadState()
+		print "Loading previous state"
 
 
 print "total batches ", totalBatches

@@ -21,3 +21,9 @@ def getRandomNoise(size):
 	for i in range(size):
 		noise[i, : ] = np.random.uniform(-1, 1, 100)
 	return noise
+
+
+def saveImageVector(imgVec):
+	imgVec = np.rollaxis(imgVec, 0, 3) 
+	cv2.imwrite("../data/save.jpg", np.uint8(255 * 0.5 * (imgVec + 1.0)))
+	np.savetxt("../data/img_dump.txt", imgVec , delimiter=",")
