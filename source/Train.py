@@ -109,6 +109,7 @@ def trainOnBatch(batchNo):
 
 if not DONT_LOADSTATE:
 	if isSavedState():
+		# this will also override the params given
 		loadState()
 		print "Loading previous state"
 
